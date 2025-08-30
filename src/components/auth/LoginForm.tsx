@@ -46,7 +46,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSignup }) => {
           <div className="text-center mb-8">
             <img 
               src="/logo (3).png" 
-              alt="Logo" 
+              alt="ASman Logo" 
               className="mx-auto w-28 h-28 object-contain" 
             />
             <p className="text-gray-800 font-semibold mt-3 text-lg">
