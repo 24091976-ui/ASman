@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Logo } from '../ui/Logo';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Mail, Lock, UserPlus, LogIn } from 'lucide-react';
@@ -43,13 +42,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSignup }) => {
         className="w-full max-w-md"
       >
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
+          {/* Logo + Tagline */}
           <div className="text-center mb-8">
-            <Logo size="lg" showTagline />
-            <p className="text-gray-600 mt-4 text-lg">
+            <img 
+              src="/logo (3).png" 
+              alt="ASman Logo" 
+              className="mx-auto w-28 h-28 object-contain" 
+            />
+            <p className="text-gray-800 font-semibold mt-3 text-lg">
+              Sky of Knowledge, Roots in India
+            </p>
+            <p className="text-gray-600 mt-2 text-base">
               Welcome to ASman Learning – Teacher AI Assistant
             </p>
           </div>
 
+          {/* Login/Signup Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             {!isLogin && (
               <Input
@@ -100,6 +108,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSignup }) => {
             </Button>
           </form>
 
+          {/* Switch Between Login/Signup */}
           <div className="mt-6 text-center">
             <button
               type="button"
