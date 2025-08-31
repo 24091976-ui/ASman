@@ -21,9 +21,9 @@ export const AITeacherAnimation: React.FC<AITeacherAnimationProps> = ({
   const [speechUtterance, setSpeechUtterance] = useState<SpeechSynthesisUtterance | null>(null);
 
   const teacherPhrases = {
-    intro: `Hello my dear Class ${classLevel} students! I'm ASman, your AI teacher. Today we're going to explore an exciting ${subject} topic together. Are you ready to learn something amazing?`,
-    explaining: content,
-    conclusion: `Wonderful! We've learned so much today about ${subject}. Remember, learning is like planting seeds in your mind - with practice and curiosity, they will grow into beautiful knowledge trees! Keep asking questions and exploring the world around you.`
+    intro: `Hello my dear Class ${classLevel} students! I'm ASman, your AI teacher assistant. Today I have carefully analyzed the ${subject} content you uploaded, and I'm absolutely excited to explain every detail to you! Are you ready to discover all the amazing things hidden in your uploaded material?`,
+    explaining: `Now let me explain everything about your uploaded content in complete detail! ${content.slice(0, 800)}... This is just the beginning of what we can learn from your upload. Every word, every concept, every example in your uploaded material has been carefully analyzed by me to help you understand it perfectly!`,
+    conclusion: `Wonderful! We've explored every aspect of your uploaded ${subject} content together! From the specific details you provided to the real-world applications, we've covered it all. Remember, the content you uploaded today is like a treasure chest of knowledge - each concept is a precious gem that will help you in all your future learning. Keep that curiosity alive and always remember how today's upload connects to everything around you!`
   };
 
   const startExplanation = () => {
@@ -227,15 +227,15 @@ export const AITeacherAnimation: React.FC<AITeacherAnimationProps> = ({
           >
             <p className="text-lg font-semibold text-gray-800 mb-2">
               {isPlaying ? (
-                currentPhase === 'intro' ? 'Introducing the Topic...' :
-                currentPhase === 'explaining' ? 'Explaining the Lesson...' :
-                'Wrapping Up...'
+                currentPhase === 'intro' ? 'Analyzing Your Upload...' :
+                currentPhase === 'explaining' ? 'Explaining Every Detail...' :
+                'Summarizing Your Content...'
               ) : (
-                'Ready to Teach!'
+                'Ready to Explain Your Upload!'
               )}
             </p>
             <p className="text-sm text-gray-600">
-              {isPlaying ? 'ASman is explaining your lesson' : 'Click play to start the AI explanation'}
+              {isPlaying ? 'ASman is analyzing and explaining your uploaded content in complete detail' : 'Click play to hear ASman explain everything about your uploaded content'}
             </p>
           </motion.div>
         </div>
@@ -306,7 +306,7 @@ export const AITeacherAnimation: React.FC<AITeacherAnimationProps> = ({
                   transition={{ duration: 1, repeat: Infinity }}
                   className="w-3 h-3 bg-blue-500 rounded-full"
                 />
-                <span className="font-semibold text-blue-800">ASman is saying:</span>
+                <span className="font-semibold text-blue-800">ASman is explaining your upload:</span>
               </div>
               <p className="text-gray-700 text-sm leading-relaxed">
                 {teacherPhrases[currentPhase]}
@@ -319,19 +319,19 @@ export const AITeacherAnimation: React.FC<AITeacherAnimationProps> = ({
         <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
           <div className="flex items-center space-x-2 text-gray-600">
             <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-            <span>Multi-phase explanation</span>
+            <span>Complete upload analysis</span>
           </div>
           <div className="flex items-center space-x-2 text-gray-600">
             <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-            <span>Interactive animations</span>
+            <span>Detailed content breakdown</span>
           </div>
           <div className="flex items-center space-x-2 text-gray-600">
             <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-            <span>Voice narration</span>
+            <span>Voice explanation of upload</span>
           </div>
           <div className="flex items-center space-x-2 text-gray-600">
             <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-            <span>Subject-specific content</span>
+            <span>Upload-specific teaching</span>
           </div>
         </div>
       </div>

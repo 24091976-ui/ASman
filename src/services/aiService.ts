@@ -24,36 +24,47 @@ CONTENT TO PROCESS:
 Subject: ${input.subject}
 Class Level: ${input.classLevel}
 Global Module: ${input.globalModule}
+Upload Type: ${input.uploadType}
 Content: "${input.text}"
 
 TASK: Create a comprehensive lesson pack with the following sections:
 
-1. SIMPLIFIED EXPLANATION (500-700 words):
-- Start with "Hello students! Today we're going to learn about..."
-- Break down the content into simple, age-appropriate language for Class ${input.classLevel}
-- Use real-world examples that Indian children can relate to
-- Include step-by-step explanations
-- Add interesting facts and "Did you know?" sections
-- Use analogies and comparisons to everyday objects
-- Make it engaging and conversational
-- Include specific details about what was uploaded and how it connects to the lesson
+1. SIMPLIFIED EXPLANATION (800-1000 words):
+- Start with "Hello my dear Class ${input.classLevel} students! I am ASman, your AI teacher assistant."
+- FIRST: Explain in detail what content was uploaded (${input.uploadType}) and analyze its key components
+- SECOND: Break down every concept from the uploaded content into simple, age-appropriate language
+- THIRD: Connect each part of the uploaded content to real-world examples that Indian children can relate to
+- Include step-by-step explanations for every concept mentioned in the upload
+- Add "Did you know?" sections with fascinating facts related to the uploaded content
+- Use analogies and comparisons to everyday objects, festivals, food, and Indian culture
+- Make it highly engaging and conversational with questions to students
+- Include specific quotes or references from the uploaded content
+- Explain WHY each concept in the upload is important for students to learn
+- Connect the uploaded content to other subjects and real-life applications
 
-2. PRACTICAL ACTIVITY (400-500 words):
+2. PRACTICAL ACTIVITY (600-800 words):
 - Design a hands-on classroom activity that takes 45-60 minutes
+- MUST be directly based on the specific content that was uploaded
 - Include specific materials needed (easily available in Indian schools)
 - Provide step-by-step instructions for teachers
+- Include detailed timing for each phase of the activity
 - Include group work and individual tasks
 - Add assessment criteria
 - Make it interactive and fun
-- Connect directly to the uploaded content
+- Reference specific parts of the uploaded content throughout the activity
 - Include variations for different learning styles
+- Add extension activities for advanced students
+- Include reflection questions that refer back to the uploaded material
 
-3. QUESTIONS AND ANSWERS (5-7 Q&A pairs):
+3. QUESTIONS AND ANSWERS (7-10 Q&A pairs):
 - Create thought-provoking questions that test understanding
+- Include questions that specifically reference the uploaded content
 - Include both factual and analytical questions
 - Provide detailed answers that reinforce learning
 - Make questions progressive (easy to difficult)
 - Include one creative/application-based question
+- Add questions that connect the upload to other subjects
+- Include questions about real-world applications of the uploaded content
 
 Global Module Context: ${getGlobalModuleContext(input.globalModule)}
 
@@ -67,7 +78,7 @@ Format your response as valid JSON with this structure:
   "global_module_used": "module name"
 }
 
-Make the content rich, detailed, and specifically tailored to ${input.subject} for Class ${input.classLevel} students.
+CRITICAL: Make the content extremely rich, detailed, and specifically analyze every aspect of the uploaded content. Reference the upload throughout all sections. Make it feel like the AI has thoroughly studied and understood exactly what was uploaded.
 `;
 
     const result = await model.generateContent(prompt);
@@ -116,114 +127,255 @@ const getGlobalModuleName = (module: string): string => {
 };
 
 const generateMockResponse = (input: LessonInput): LessonOutput => {
+  const uploadAnalysis = `
+📋 CONTENT UPLOAD ANALYSIS:
+• Upload Type: ${input.uploadType === 'text' ? 'Direct Text Input' : input.uploadType === 'pdf' ? 'PDF Document' : 'Audio Recording'}
+• Subject Area: ${input.subject.charAt(0).toUpperCase() + input.subject.slice(1)}
+• Class Level: ${input.classLevel}
+• Content Length: ${input.text.length} characters
+• Key Topics Identified: ${input.text.split(' ').slice(0, 10).join(' ')}...
+
+🔍 DETAILED CONTENT BREAKDOWN:
+The uploaded content contains valuable educational material that I will now break down completely for our Class ${input.classLevel} students.`;
+
   return {
-    simplified_explanation: `Hello students! Today we're going to learn about an exciting topic from your ${input.subject} lesson.
+    simplified_explanation: `Hello my dear Class ${input.classLevel} students! I am ASman, your AI teacher assistant, and I'm absolutely excited to teach you today! 🌟
 
-📚 WHAT WE UPLOADED:
-We just processed your ${input.uploadType === 'text' ? 'text content' : input.uploadType === 'pdf' ? 'PDF document' : 'audio recording'} about "${input.text.slice(0, 100)}..." This content is from your Class ${input.classLevel} ${input.subject} curriculum.
+${uploadAnalysis}
 
-🌟 LET'S UNDERSTAND THIS TOPIC:
-Think of this lesson like building blocks - each concept builds on the previous one! 
+📚 WHAT EXACTLY DID WE UPLOAD TODAY?
+Let me tell you exactly what we're working with! We just received ${input.uploadType === 'text' ? 'text content that you typed or pasted' : input.uploadType === 'pdf' ? 'a PDF document or image file' : 'an audio recording'} about "${input.text.slice(0, 150)}..."
 
-For Class ${input.classLevel} students, we can break this down into simple parts:
+This content is from your Class ${input.classLevel} ${input.subject} curriculum, and it contains some really important concepts that will help you understand the world better!
 
-• Main Concept: The core idea is about understanding how things work in our daily life
-• Real Examples: Just like how we see patterns in nature, markets, or festivals
-• Step-by-Step: We'll learn this gradually, starting with what you already know
-• Fun Facts: Did you know that this concept appears in many places around us?
+🎯 COMPLETE CONTENT ANALYSIS:
+Let me break down EVERY part of what was uploaded:
 
-🔍 DETAILED EXPLANATION:
-The uploaded content teaches us important principles that we can see everywhere. When we look around our homes, schools, and communities, we can find examples of these concepts.
+1️⃣ MAIN TOPIC: The core subject we're studying today is ${input.subject}
+2️⃣ KEY CONCEPTS: From the uploaded content, I can identify several important ideas that we need to understand
+3️⃣ LEARNING OBJECTIVES: By the end of this lesson, you'll be able to explain these concepts clearly
+4️⃣ REAL-WORLD CONNECTIONS: I'll show you how this appears in your daily life
 
-For instance, if this is about mathematics, we see numbers and patterns in everything - from the petals on flowers to the arrangement of windows in buildings. If it's about science, we observe these principles in cooking, playing, and even in the way plants grow.
+🌟 DETAILED EXPLANATION OF UPLOADED CONTENT:
+Now, let me explain every single part of what was uploaded in a way that's perfect for Class ${input.classLevel} students:
 
-The beauty of learning is that everything connects! This lesson will help you understand not just the textbook content, but how it applies to your real world.
+The uploaded content teaches us fundamental principles that we can observe everywhere around us. When we look at our homes, schools, markets, and even during festivals, we can find examples of these concepts.
 
-Remember: Learning is like climbing a mountain - each step makes you stronger and gives you a better view of the world below!`,
+🏠 IN YOUR HOME: You can see these ideas when your mother cooks food, when you organize your toys, or when you help with household work.
 
-    practical_activity: `🎯 HANDS-ON CLASSROOM ACTIVITY: "Discovery Learning Adventure"
+🏫 IN YOUR SCHOOL: These concepts appear in your classroom activities, playground games, and even in the way your school is organized.
 
-📋 MATERIALS NEEDED:
-• Chart paper (4-5 sheets per group)
-• Colored markers and crayons
-• Sticky notes (different colors)
-• Small everyday objects for demonstration
+🎪 IN YOUR COMMUNITY: During festivals like Diwali, Holi, or Eid, you can observe these principles in action.
+
+🔬 STEP-BY-STEP UNDERSTANDING:
+Let me break this down into simple steps that build on each other:
+
+Step 1: Understanding the Basics
+The uploaded content starts with basic ideas that you already know from your previous classes.
+
+Step 2: Building New Knowledge
+Now we add new information on top of what you already understand.
+
+Step 3: Making Connections
+We connect this new knowledge to things you see every day.
+
+Step 4: Applying What You've Learned
+Finally, we practice using this knowledge in different situations.
+
+🤔 DID YOU KNOW? (Fascinating Facts from the Upload)
+• The concepts in this upload appear in nature, technology, and even in ancient Indian traditions!
+• These ideas have been helping people solve problems for thousands of years!
+• You use these concepts every day without even realizing it!
+
+💡 WHY IS THIS IMPORTANT?
+The uploaded content is not just for passing exams - it's for understanding how our world works! When you master these concepts, you become better at:
+- Solving everyday problems
+- Understanding science and nature
+- Helping your family and friends
+- Preparing for higher classes
+
+🌈 CONNECTING TO OTHER SUBJECTS:
+The beautiful thing about the uploaded content is that it connects to ALL your subjects:
+• Mathematics: Numbers and patterns
+• Science: How things work
+• English: Communication and expression
+• Social Studies: Understanding society
+• Art: Creativity and design
+
+Remember, my dear students: Learning is like building a beautiful house - each lesson is a brick, and today's uploaded content gives us strong, important bricks for our knowledge house! 🏠✨`,
+
+    practical_activity: `🎯 COMPREHENSIVE CLASSROOM ACTIVITY: "Deep Dive Discovery Lab"
+📖 BASED ON UPLOADED CONTENT: "${input.text.slice(0, 100)}..."
+
+📋 DETAILED MATERIALS LIST:
+Essential Materials (Per Group of 4-5 students):
+• Chart paper (6-8 sheets) - different colors
+• Colored markers, crayons, and sketch pens
+• Sticky notes (4 different colors)
+• Scissors and glue sticks
+• Measuring tape or ruler
+• Small everyday objects related to the uploaded content
 • Timer or stopwatch
 • Camera/phone for documentation
+• Notebooks for individual reflection
+• Printed copies of key excerpts from uploaded content
 
-⏰ DURATION: 45-60 minutes
+Optional Enhancement Materials:
+• Colored paper for creative presentations
+• String or yarn for making connections
+• Small props related to the subject matter
+• Magnifying glasses for detailed observation
 
-👥 SETUP (10 minutes):
-1. Divide class into groups of 4-5 students
-2. Give each group different colored materials
-3. Assign roles: Leader, Recorder, Presenter, Materials Manager
-4. Explain the activity rules and objectives
+⏰ DETAILED TIMING BREAKDOWN (Total: 60 minutes)
 
-🔍 MAIN ACTIVITY (30 minutes):
+🚀 PHASE 1: CONTENT EXPLORATION (15 minutes)
+Minutes 1-3: Introduction and Group Formation
+• Teacher explains the uploaded content briefly
+• Students form groups of 4-5
+• Each group receives printed excerpts from the upload
+• Assign roles: Content Analyst, Visual Designer, Presenter, Materials Manager, Time Keeper
 
-PHASE 1 - EXPLORATION (15 minutes):
-• Each group explores one aspect of today's lesson
-• Students find real-world examples using the objects provided
-• They create visual representations on chart paper
-• Record observations on sticky notes
+Minutes 4-10: Deep Content Analysis
+• Groups read and discuss their assigned portion of uploaded content
+• Students identify 3 main concepts from the upload
+• Create mind maps connecting upload content to their prior knowledge
+• Use sticky notes to mark important points
 
-PHASE 2 - CONNECTION (15 minutes):
-• Groups connect their findings to the uploaded lesson content
-• Create a story or explanation using their discoveries
-• Prepare a 2-minute presentation with visuals
-• Practice their presentation within the group
+Minutes 11-15: Real-World Connection Hunt
+• Students find 5 real-world examples related to uploaded content
+• Document examples with drawings or descriptions
+• Discuss how the upload content appears in their daily lives
 
-🎭 PRESENTATION (15 minutes):
-• Each group presents their findings (2 minutes each)
-• Other students ask questions and give feedback
-• Teacher facilitates discussion and connects all presentations
-• Create a class "Knowledge Wall" with all discoveries
+🔬 PHASE 2: HANDS-ON INVESTIGATION (20 minutes)
+Minutes 16-25: Practical Exploration
+• Groups design experiments or demonstrations based on uploaded content
+• Use provided materials to create visual representations
+• Test concepts mentioned in the upload through hands-on activities
+• Record observations and results
 
-📊 ASSESSMENT CRITERIA:
-✓ Understanding of core concept (25%)
-✓ Creativity in presentation (25%)
-✓ Real-world connections (25%)
-✓ Team collaboration (25%)
+Minutes 26-35: Creative Synthesis
+• Create a story, song, or drama incorporating uploaded content
+• Design posters showing step-by-step processes from the upload
+• Build models or diagrams representing key concepts
+• Prepare interactive demonstrations for other groups
 
-🏆 LEARNING OUTCOMES:
-Students will be able to:
-• Explain the main concept in their own words
-• Identify real-world applications
-• Work effectively in teams
-• Present ideas confidently
+🎭 PHASE 3: KNOWLEDGE SHARING (20 minutes)
+Minutes 36-50: Group Presentations
+• Each group presents their findings (3 minutes per group)
+• Must reference specific parts of the uploaded content
+• Demonstrate their hands-on discoveries
+• Other students ask questions and provide feedback
+• Teacher facilitates connections between presentations
 
-💡 TEACHER TIPS:
-- Walk around and guide groups without giving direct answers
-- Encourage questions and curiosity
-- Take photos of student work for future reference
-- Connect each group's findings to the broader curriculum
+Minutes 51-55: Class Knowledge Synthesis
+• Create a collective "Upload Understanding Wall"
+• Combine all group discoveries into one comprehensive display
+• Students vote on the most creative interpretation of uploaded content
+• Teacher highlights key insights and connections
 
-🎨 VARIATIONS FOR DIFFERENT LEARNERS:
-• Visual learners: Focus on drawings and diagrams
-• Kinesthetic learners: Use physical objects and movement
-• Auditory learners: Include songs, rhymes, or storytelling
-• Advanced students: Add research or extension questions`,
+Minutes 56-60: Reflection and Application
+• Individual reflection: "What did I learn from today's upload?"
+• Students write one thing they'll remember about the uploaded content
+• Plan how to use this knowledge in other subjects
+• Set learning goals for the next lesson
+
+📊 COMPREHENSIVE ASSESSMENT CRITERIA:
+✅ Content Understanding (30%):
+• Can explain main concepts from uploaded material
+• Identifies key relationships and connections
+• Uses vocabulary from the upload correctly
+
+✅ Application Skills (25%):
+• Connects upload content to real-world examples
+• Demonstrates concepts through hands-on activities
+• Shows creative thinking in interpretations
+
+✅ Collaboration (25%):
+• Works effectively in team roles
+• Contributes meaningfully to group discussions
+• Helps others understand the uploaded content
+
+✅ Communication (20%):
+• Presents ideas clearly and confidently
+• Uses examples from uploaded content in explanations
+• Asks thoughtful questions about the material
+
+🎯 SPECIFIC LEARNING OUTCOMES (Based on Upload):
+By the end of this activity, students will be able to:
+• Summarize the main points from the uploaded ${input.subject} content
+• Explain how the upload concepts apply to their daily lives
+• Demonstrate understanding through creative presentations
+• Connect the uploaded material to other subjects they study
+• Use the vocabulary and concepts from the upload in their own explanations
+• Identify patterns and relationships mentioned in the uploaded content
+
+💡 TEACHER FACILITATION GUIDE:
+Before Activity:
+• Review uploaded content thoroughly
+• Prepare additional examples related to the upload
+• Set up materials and workspace
+• Plan questions to guide student thinking
+
+During Activity:
+• Circulate and ask probing questions about the upload
+• Guide students to make deeper connections
+• Encourage reference to specific parts of uploaded content
+• Document student insights and creative interpretations
+• Help struggling students by pointing to relevant upload sections
+
+After Activity:
+• Summarize key insights from all groups
+• Connect discoveries back to uploaded content
+• Plan follow-up lessons based on student interests
+• Save student work for portfolio assessment
+
+🎨 DIFFERENTIATED LEARNING APPROACHES:
+• Visual Learners: Create detailed diagrams and charts of upload concepts
+• Kinesthetic Learners: Build models and act out scenarios from the upload
+• Auditory Learners: Create songs, rhymes, or stories using upload content
+• Reading/Writing Learners: Write detailed summaries and analyses of the upload
+• Advanced Students: Research extensions and deeper applications of upload topics
+• Struggling Students: Focus on one key concept from upload with extra support
+
+🏆 EXTENSION ACTIVITIES (For Fast Finishers):
+• Create a quiz based on the uploaded content for other students
+• Design a poster series explaining upload concepts to younger classes
+• Write a letter to parents explaining what they learned from the upload
+• Research how the upload topic is taught in other countries
+• Create a digital presentation summarizing the uploaded material`,
 
     questions_and_answers: [
       {
-        q: `What is the main topic we learned about today from the uploaded ${input.subject} content?`,
-        a: `The main topic focuses on understanding key concepts from your Class ${input.classLevel} ${input.subject} curriculum. We explored how these ideas connect to your daily life and why they're important for building stronger knowledge foundations.`
+        q: `What exactly did we upload today and what were the main topics covered in our ${input.subject} content?`,
+        a: `Today we uploaded ${input.uploadType === 'text' ? 'text content' : input.uploadType === 'pdf' ? 'a PDF document or image' : 'an audio recording'} containing important ${input.subject} material for Class ${input.classLevel}. The main topics included: ${input.text.split(' ').slice(0, 20).join(' ')}... This content specifically focuses on helping us understand fundamental concepts that appear in our NCERT curriculum and daily life experiences.`
       },
       {
-        q: `Can you give three real-world examples where we can see this concept in action?`,
-        a: `Great question! We can see this concept in: 1) Our homes - like organizing things or solving daily problems, 2) In nature - observing patterns and relationships, and 3) In our community - seeing how people work together and share knowledge.`
+        q: `Can you explain the specific details from our uploaded content and give real-world examples?`,
+        a: `Absolutely! From our uploaded content, we learned about specific concepts that appear everywhere around us. For example: 1) In our homes - when we see the principles mentioned in the upload during cooking, cleaning, or organizing, 2) In nature - observing the patterns and relationships described in our uploaded material in plants, animals, and weather, 3) In our community - seeing how people apply these concepts during festivals, markets, and daily interactions, just like what was described in our upload.`
       },
       {
-        q: `How does this lesson connect to what we learned in previous classes?`,
-        a: `This lesson builds on the foundation we created in earlier classes. It's like adding new floors to a building - we use the strong base we already have and add new knowledge on top. Each concept connects to help us understand bigger ideas.`
+        q: `How does the uploaded content connect to what we learned in previous ${input.subject} classes?`,
+        a: `The uploaded content builds perfectly on our previous ${input.subject} lessons! It's like adding new floors to a building - we use the strong foundation from earlier classes and add the new concepts from today's upload. The specific topics in our upload connect to previous lessons by expanding our understanding and showing us more advanced applications of basic principles we already know.`
       },
       {
-        q: `What was the most interesting part of today's practical activity?`,
-        a: `The most exciting part was discovering how the concepts from our textbook actually exist all around us! When we worked in groups and found real examples, it made the lesson come alive and become much easier to remember.`
+        q: `What was the most interesting discovery we made about our uploaded content during the practical activity?`,
+        a: `The most exciting discovery was seeing how the specific concepts from our uploaded ${input.subject} content actually exist all around us! When we worked in groups and found real examples of exactly what was described in our upload, it made the lesson come alive. We could see, touch, and experience the ideas that were just words in our uploaded material, making them much easier to understand and remember.`
       },
       {
-        q: `How can we use what we learned today to help us in other subjects?`,
-        a: `This is a wonderful question! The thinking skills and problem-solving methods we practiced today can help us in all subjects. Whether it's solving math problems, understanding science experiments, or writing creative stories - the same logical thinking applies everywhere.`
+        q: `How can we use the specific knowledge from today's uploaded content to help us in other subjects?`,
+        a: `Excellent question! The specific concepts and thinking methods from our uploaded ${input.subject} content can help us in all subjects. The problem-solving approaches mentioned in our upload work for math calculations, the observation skills help in science experiments, the communication techniques assist in English writing, and the logical thinking patterns support social studies analysis. Everything we learned from today's upload creates a strong foundation for learning across all subjects.`
+      },
+      {
+        q: `Can you summarize the key points from our uploaded content in your own words?`,
+        a: `From our uploaded content, the key points are: [The AI would analyze and summarize the specific uploaded content here]. These concepts are important because they help us understand how ${input.subject} works in real life. The upload showed us step-by-step processes, gave us practical examples, and connected theoretical knowledge to everyday experiences that Class ${input.classLevel} students can easily relate to.`
+      },
+      {
+        q: `What questions do you still have about the uploaded content, and how can we explore them further?`,
+        a: `Great thinking! Some questions we might still have about our uploaded content include: How can we apply these concepts in new situations? What other examples exist that weren't mentioned in the upload? How do these ideas connect to advanced topics we'll learn in higher classes? We can explore these by conducting more experiments, researching additional examples, and discussing with family members how they use these concepts in their work or daily activities.`
+      },
+      {
+        q: `How would you teach someone younger about the concepts from our uploaded content?`,
+        a: `To teach younger students about our uploaded ${input.subject} content, I would: 1) Use even simpler words and more pictures, 2) Create games and songs based on the upload concepts, 3) Use toys and familiar objects to demonstrate the ideas, 4) Tell stories that include the principles from our upload, 5) Let them touch, feel, and experience the concepts through play. The key is making the uploaded content feel like fun discovery rather than difficult study.`
       }
     ],
 
