@@ -6,7 +6,7 @@ import { Button } from '../ui/Button';
 import { Textarea } from '../ui/Textarea';
 import { Select } from '../ui/Select';
 import { Upload, FileText, Mic, Sparkles } from 'lucide-react';
-import { CLASS_LEVELS, GLOBAL_MODULES } from '../../config/constants';
+import { CLASS_LEVELS, GLOBAL_MODULES, SUBJECTS } from '../../config/constants';
 import { LessonInput } from '../../types';
 
 interface UploadSectionProps {
@@ -18,6 +18,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({ onGenerate, loadin
   const [uploadType, setUploadType] = useState<'text' | 'pdf' | 'audio'>('text');
   const [text, setText] = useState('');
   const [classLevel, setClassLevel] = useState('3');
+  const [subject, setSubject] = useState('mathematics');
   const [globalModule, setGlobalModule] = useState('auto');
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -46,6 +47,7 @@ export const UploadSection: React.FC<UploadSectionProps> = ({ onGenerate, loadin
     await onGenerate({
       text,
       classLevel,
+      subject,
       globalModule,
       uploadType
     });
@@ -123,7 +125,16 @@ export const UploadSection: React.FC<UploadSectionProps> = ({ onGenerate, loadin
         )}
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="p-6">
+          <Select
+            label="Subject"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            options={SUBJECTS}
+          />
+        </Card>
+
         <Card className="p-6">
           <Select
             label="Class Level"

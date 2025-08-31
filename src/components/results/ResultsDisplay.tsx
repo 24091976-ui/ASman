@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { LessonCard } from './LessonCard';
 import { QACard } from './QACard';
 import { GlobalModuleCard } from './GlobalModuleCard';
-import { AudioPlayer } from './AudioPlayer';
+import { AITeacherAnimation } from './AITeacherAnimation';
 import { ExportSection } from './ExportSection';
 import { BookOpen, Activity, Globe } from 'lucide-react';
 import { LessonOutput } from '../../types';
@@ -11,11 +11,13 @@ import { LessonOutput } from '../../types';
 interface ResultsDisplayProps {
   output: LessonOutput;
   classLevel: string;
+  subject: string;
 }
 
 export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ 
   output, 
-  classLevel 
+  classLevel,
+  subject
 }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -80,7 +82,11 @@ export const ResultsDisplay: React.FC<ResultsDisplayProps> = ({
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <AudioPlayer text={output.simplified_explanation} />
+        <AITeacherAnimation 
+          content={output.simplified_explanation} 
+          subject={subject}
+          classLevel={classLevel}
+        />
       </motion.div>
 
       <motion.div variants={itemVariants}>

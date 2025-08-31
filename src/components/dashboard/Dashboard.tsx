@@ -18,10 +18,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
   const [lessonOutput, setLessonOutput] = useState<LessonOutput | null>(null);
   const [loading, setLoading] = useState(false);
   const [currentClassLevel, setCurrentClassLevel] = useState('');
+  const [currentSubject, setCurrentSubject] = useState('');
 
   const handleGenerate = async (input: LessonInput) => {
     setLoading(true);
     setCurrentClassLevel(input.classLevel);
+    setCurrentSubject(input.subject);
     
     try {
       const output = await generateLessonPack(input);
@@ -103,7 +105,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
             </motion.div>
 
             {/* Results */}
-            <ResultsDisplay output={lessonOutput} classLevel={currentClassLevel} />
+            <ResultsDisplay 
+              output={lessonOutput} 
+              classLevel={currentClassLevel}
+              subject={currentSubject}
+            />
           </>
         )}
       </main>
