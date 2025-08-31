@@ -31,6 +31,17 @@ export const CLASS_LEVELS = [
   { value: '5', label: 'Class 5' }
 ];
 
+export const SUBJECTS = [
+  { value: 'mathematics', label: 'Mathematics' },
+  { value: 'english', label: 'English' },
+  { value: 'hindi', label: 'Hindi' },
+  { value: 'environmental-studies', label: 'Environmental Studies' },
+  { value: 'science', label: 'Science' },
+  { value: 'social-studies', label: 'Social Studies' },
+  { value: 'art-craft', label: 'Art & Craft' },
+  { value: 'physical-education', label: 'Physical Education' }
+];
+
 export const GLOBAL_MODULES = [
   { 
     value: 'auto', 
